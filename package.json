@@ -1,0 +1,14 @@
+{
+    "name": "com.rotstudio.rotslibpopups",
+    "author": "Rotstudio",
+    "displayName": "RotsLib Popups",
+    "version": "1.2.0",
+    "unity": "2019.4",
+    "keywords": [],
+    "description": "Módulo de Popups do Rotciv",
+    "samples": [],
+	"dependencies": {
+		"com.rotstudio.rotslib": "https://github.com/RotcivOcnarb/RotsLib.git",
+		"com.unity.addressables": "1.16.19"
+	}
+}
