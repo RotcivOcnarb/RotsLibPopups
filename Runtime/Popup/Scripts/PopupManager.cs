@@ -19,6 +19,7 @@ namespace RotsLib.Popup
         public PopupWindow LoadedPopup;
         public BlurRenderer.ShaderParams blurParams;
         public bool printAssetLoading;
+        public Color preloadCanvasColor;
 
         List<PopupWindow> loadedPopups;
         Dictionary<int, GameObject> createdCanvases;
@@ -57,7 +58,7 @@ namespace RotsLib.Popup
             pretoRect.offsetMin = Vector3.zero;
             pretoRect.offsetMax = Vector3.zero;
             Image pretoImage = preto.AddComponent<Image>();
-            pretoImage.color = new Color(1, 1, 1, 0.5f);
+            pretoImage.color = preloadCanvasColor;
             return preto;
         }
 
