@@ -18,6 +18,7 @@ namespace RotsLib.Popup
         [HideInInspector]
         public PopupWindow LoadedPopup;
         public BlurRenderer.ShaderParams blurParams;
+        public bool printAssetLoading;
 
         List<PopupWindow> loadedPopups;
         Dictionary<int, GameObject> createdCanvases;
@@ -56,7 +57,7 @@ namespace RotsLib.Popup
             pretoRect.offsetMin = Vector3.zero;
             pretoRect.offsetMax = Vector3.zero;
             Image pretoImage = preto.AddComponent<Image>();
-            pretoImage.color = new Color(1, 1, 1, 0f);
+            pretoImage.color = new Color(1, 1, 1, 0.5f);
             return preto;
         }
 
@@ -107,6 +108,7 @@ namespace RotsLib.Popup
         public IEnumerator OpenPopupRoutine(AssetReference assetReference, int layerOrder)
         {
             while (!initialized) yield return new WaitForEndOfFrame();
+
             //Abre uma tela preta só pra nao ficar sem resposta
             BlurRenderer blurRenderer = BlurRenderer.Create();
             Material mat = blurRenderer.GetBlur(blurParams);
@@ -156,9 +158,14 @@ namespace RotsLib.Popup
                 if (!resourceLocationMap.ContainsKey(r.PrimaryKey))
                 {
                     resourceLocationMap.Add(r.PrimaryKey, r);
-                    Debug.Log("Loaded Addressable " + r.PrimaryKey);
+                    if (printAssetLoading)
+                        Debug.Log("Loaded Addressable " + r.PrimaryKey);
                 }
-                else Debug.Log("Could not load Addressable " + r.PrimaryKey + " as it was already loaded");
+                else
+                {
+                    if(printAssetLoading)
+                        Debug.Log("Could not load Addressable " + r.PrimaryKey + " as it was already loaded");
+                }
 
                 if (!resourceLocationMap.ContainsKey(r.ToString()))
                     resourceLocationMap.Add(r.ToString(), r);
@@ -212,5 +219,10 @@ namespace RotsLib.Popup
             yield return OpenPopupRoutine(assetKey, layerOrder);
             callback?.Invoke(LoadedPopup);
         }
+
+        public bool HasInitialized()
+        {
+            return initialized;
+        } 
     }
 }
