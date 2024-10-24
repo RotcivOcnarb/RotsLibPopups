@@ -21,10 +21,11 @@ namespace RotsLib.Popup
         public bool printAssetLoading;
         public Color preloadCanvasColor;
 
-        List<PopupWindow> loadedPopups;
+        public List<PopupWindow> LoadedPopups { get; set; }
         Dictionary<int, GameObject> createdCanvases;
         GameObject canvasPreset;
         bool initialized = false;
+
 
         Dictionary<string, IResourceLocation> resourceLocationMap;
 
@@ -34,7 +35,7 @@ namespace RotsLib.Popup
             if (Instance == null)
             {
                 Instance = this;
-                loadedPopups = new List<PopupWindow>();
+                LoadedPopups = new List<PopupWindow>();
                 createdCanvases = new Dictionary<int, GameObject>();
                 canvasPreset = transform.GetChild(0).gameObject;
 
@@ -100,7 +101,7 @@ namespace RotsLib.Popup
             popup.SetBlurRenderer(blurRenderer, mat);
             popup.OpenPopup();
             LoadedPopup = popup;
-            loadedPopups.Add(popup);
+            LoadedPopups.Add(popup);
 
             Destroy(preto);
 
@@ -144,7 +145,7 @@ namespace RotsLib.Popup
             popup.SetBlurRenderer(blurRenderer, mat);
             popup.OpenPopup();
             LoadedPopup = popup;
-            loadedPopups.Add(popup);
+            LoadedPopups.Add(popup);
 
             Destroy(preto);
         }
@@ -176,12 +177,12 @@ namespace RotsLib.Popup
 
         private void Update()
         {
-            for (int i = loadedPopups.Count - 1; i >= 0; i--)
+            for (int i = LoadedPopups.Count - 1; i >= 0; i--)
             {
-                PopupWindow window = loadedPopups[i];
+                PopupWindow window = LoadedPopups[i];
                 if (!window.InScene())
                 {
-                    loadedPopups.RemoveAt(i);
+                    LoadedPopups.RemoveAt(i);
                     Addressables.Release(window.gameObject);
                 }
             }
